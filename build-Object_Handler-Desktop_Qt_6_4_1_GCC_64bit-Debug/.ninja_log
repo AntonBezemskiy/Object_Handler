@@ -1,5 +1,0 @@
-# ninja log v5
-0	710	1698683315750037231	CMakeFiles/Object_Processing.dir/src/main.cpp.o	4c63b7cbaaa9052b
-0	1019	1698683316057681892	CMakeFiles/Object_Processing.dir/src/list.cpp.o	74f39feffe50f13f
-0	1077	1698683316113621159	CMakeFiles/Object_Processing.dir/src/test.cpp.o	9c723161cc45c644
-1077	1182	1698683316221504030	Object_Processing	35854edbe44cf946
