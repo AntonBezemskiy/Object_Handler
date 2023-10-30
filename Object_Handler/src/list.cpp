@@ -70,8 +70,8 @@ void SortObjectInGroup(It begin, It end, Comp comp){
 }
 
 
-void Group::AddObject(const Object& object){
-    objects.insert(std::make_shared<Object>(object));
+void Group::AddObject(Object&& object){
+    objects.insert(std::make_shared<Object>(std::move(object)));
 }
 
 void Group::MakeGroupByName(){
@@ -237,8 +237,8 @@ void Group::MakeGroups(const int type_group, int size_group_by_type){
     }
 }
 
-void List::AddObject(const Object& object){
-    group.AddObject(object);
+void List::AddObject(Object&& object){
+    group.AddObject(std::move(object));
 }
 
 void List::MakeGroups(const int type_group,int size_group_by_type){

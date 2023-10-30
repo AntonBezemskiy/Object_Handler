@@ -33,7 +33,7 @@ void ProcessRead(List& list){
 
     Object object;
     while(infile >> object.name >> object.x >> object.y >> object.type >> object.time){
-        list.AddObject(object);
+        list.AddObject(std::move(object));
     }
 }
 
@@ -43,18 +43,18 @@ void ProcessAdd(List& list){
     Object object;
 
     if(std::cin >> object.name >> object.x >> object.y >> object.type >> object.time){
-        list.AddObject(object);
+        list.AddObject(std::move(object));
     }else{
         std::cout << "Wrong object data\n";
     }
 }
 
 void ProcessMake(List& list){
-    std::string message = "Choose and enter the type of grouping: \n"
-                          "-name : grouping by name\n"
-                          "-distance : grouping by distance\n"
-                          "-type : grouping by type\n"
-                          "-time : grouping by time\n";
+    std::string message = "\nChoose and enter the type of grouping: \n"
+                          "  -name     : grouping by name\n"
+                          "  -distance : grouping by distance\n"
+                          "  -type     : grouping by type\n"
+                          "  -time     : grouping by time\n";
     cout << message << '\n';
     std::string type;
     if(cin >> type){
@@ -175,7 +175,7 @@ void RunProgram(List& list){
 
 int main()
 {
-    //test::Test();
+    test::Test();
 
     List list;
     RunProgram(list);

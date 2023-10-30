@@ -37,7 +37,7 @@ private:
     void RelocateObject(const std::string& type);
     void EraseEmptyElements();
 public:
-    void AddObject(const Object& object);
+    void AddObject(Object&& object);
     void MakeGroups(const int type_group, int size_group_by_type);
     const ListOfGroups& GetGroups() const{
          return groups;
@@ -46,7 +46,7 @@ public:
 
 class List{
 public:
-    void AddObject(const Object& object);
+    void AddObject(Object&& object);
     void MakeGroups(const int type_group, int size_group_by_type = 5);
     const std::map<std::string, std::vector<std::weak_ptr<Object>>>& GetGroups() const;
 private:

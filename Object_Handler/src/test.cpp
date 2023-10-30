@@ -23,8 +23,8 @@ std::map<std::string, std::vector<Object>> RemoveWeakPtr(const std::map<std::str
 }
 
 void AddObject(List& list, const std::vector<Object>& objects){
-    for(const auto& object: objects){
-        list.AddObject(object);
+    for(auto object: objects){
+        list.AddObject(std::move(object));
     }
 }
 
@@ -67,13 +67,16 @@ void Test_Unique_Object(){
         Object r1 = {"Кривой", -37.23, 13.44, "Человек", 1693235249.98678};
         Object r2 = {"Кривой", -37.23, 13.44, "Человек", 1693235249.98678};
         Object r3 = {"Кривой", -37.23, 13.44, "Человек", 1693235249.98678};
-        list.AddObject(r1);
-        list.AddObject(r2);
-        list.AddObject(r3);
-        list.MakeGroups(Name);
-        const auto& get = list.GetGroups();
+
         std::map<std::string, std::vector<Object>> result;
         result["К"].push_back(r1);
+
+        list.AddObject(std::move(r1));
+        list.AddObject(std::move(r2));
+        list.AddObject(std::move(r3));
+
+        list.MakeGroups(Name);
+        const auto& get = list.GetGroups();
 
         std::map<std::string, std::vector<Object>> get_ = RemoveWeakPtr(get);
 
@@ -83,11 +86,14 @@ void Test_Unique_Object(){
         List list;
         Object r1 = {"Кривой", -37.23, 13.44, "Человек", 1693235249.98678};
         Object r2 = {"Кривой", -37.23, 13.441, "Человек", 1693235249.98678};
-        list.AddObject(r1);
-        list.AddObject(r2);
+
+        std::map<std::string, std::vector<Object>> result = {{"К", {r1,r2}}};
+
+        list.AddObject(std::move(r1));
+        list.AddObject(std::move(r2));
         list.MakeGroups(Name);
         const auto& get = list.GetGroups();
-        std::map<std::string, std::vector<Object>> result = {{"К", {r1,r2}}};
+
 
         std::map<std::string, std::vector<Object>> get_ = RemoveWeakPtr(get);
 
@@ -114,15 +120,17 @@ void Test_MakeGroupByDistance(){
         Object D11 = {"Кривой", 7071.06782, 7071.06782, "Человек", 1693235249.98678};
         Object D12 = {"Кривой", 7871.06781, 9071.06781, "Человек", 1693235249.98678};
 
+        std::map<std::string, std::vector<Object>> result = { {"UP_TO_100",{DD3,D1,D2,DD1,D3,D4,DD2}},
+                                                              {"UP_TO_1000",{D5,D6,D7,D8}},
+                                                              {"UP_TO_10000",{D9,D10}},
+                                                              {"TOO_FAR", {D11,D12}}};
+
         std::vector<Object> objects = {D4,D1,D2,DD1,DD2,D5,D6,D7,DD3,D8,D3,D9,D10,D12,D11};
         AddObject(list, objects);
 
         list.MakeGroups(Distance);
         const auto& get = list.GetGroups();
-        std::map<std::string, std::vector<Object>> result = { {"UP_TO_100",{DD3,D1,D2,DD1,D3,D4,DD2}},
-                                                              {"UP_TO_1000",{D5,D6,D7,D8}},
-                                                              {"UP_TO_10000",{D9,D10}},
-                                                              {"TOO_FAR", {D11,D12}}};
+
 
         std::map<std::string, std::vector<Object>> get_ = RemoveWeakPtr(get);
 
@@ -167,17 +175,19 @@ void Test_MakeGroupByTime(){
         Object D16 = {"Кривой", 21.2, 21.2, "Человек", current_time - 60480000.42};
         Object D17 = {"Кривой", 21.2, 21.2, "Человек", current_time - 103680000.89};
 
-        std::vector<Object> objects = {D8, D2,D3,D4,D15,D5,D6,D9,D10,D11,D12,D7,D13,D16,D1,D14,D17};
-        AddObject(list, objects);
-
-        list.MakeGroups(Time);
-        const auto& get = list.GetGroups();
         std::map<std::string, std::vector<Object>> result = { {"Today",{D1,D2,D3}},
                                                               {"Yesterday",{D4,D5}},
                                                               {"This_week",{D6,D7,D8}},
                                                               {"This_month", {D9,D10,D11}},
                                                               {"This_year", {D12,D13,D14}},
                                                               {"Previously", {D15,D16,D17}}};
+
+        std::vector<Object> objects = {D8, D2,D3,D4,D15,D5,D6,D9,D10,D11,D12,D7,D13,D16,D1,D14,D17};
+        AddObject(list, objects);
+
+        list.MakeGroups(Time);
+        const auto& get = list.GetGroups();
+
 
         std::map<std::string, std::vector<Object>> get_ = RemoveWeakPtr(get);
 
@@ -210,16 +220,18 @@ void Test_MakeGroupByName(){
         Object D16 = {"Sцыв", 0, 0, "", 0};
         Object D17 = {"9", 0, 0, "", 0};
 
-        std::vector<Object> objects = {D5,D13,D1,D3,D6,D2,D7,D8,D10,D11,D12,D16,D9,D14,D15,D17,D4};
-        AddObject(list, objects);
-
-        list.MakeGroups(Name);
-        const auto& get = list.GetGroups();
         std::map<std::string, std::vector<Object>> result = { {"А",{D1,D2,D3,D4}},
                                                               {"б",{D5}},
                                                               {"р",{D6,D7,D8,D9}},
                                                               {"с", {D10,D11,D12,D13}},
                                                               {"#", {D15,D14,D17,D16}}};
+
+        std::vector<Object> objects = {D5,D13,D1,D3,D6,D2,D7,D8,D10,D11,D12,D16,D9,D14,D15,D17,D4};
+        AddObject(list, objects);
+
+        list.MakeGroups(Name);
+        const auto& get = list.GetGroups();
+
 
         std::map<std::string, std::vector<Object>> get_ = RemoveWeakPtr(get);
 
@@ -247,15 +259,18 @@ void Test_MakeGroupByType(){
         Object D13 = {"Ольха", 0, 0, "Дерево", 0};
         Object D14 = {"Ясень", 0, 0, "Дерево", 0};
 
+
+        std::map<std::string, std::vector<Object>> result = { {"Miscellaneous",{D11,D12,D13,D14}},
+                                                              {"Здание",{D6,D7,D8,D9,D10}},
+                                                              {"Машина",{D1,D2,D3,D4,D5}}
+                                                              };
+
         std::vector<Object> objects = {D5,D13,D1,D3,D6,D2,D7,D8,D10,D11,D12,D9,D14,D4};
         AddObject(list, objects);
 
         list.MakeGroups(Type, 5);
         const auto& get = list.GetGroups();
-        std::map<std::string, std::vector<Object>> result = { {"Miscellaneous",{D11,D12,D13,D14}},
-                                                              {"Здание",{D6,D7,D8,D9,D10}},
-                                                              {"Машина",{D1,D2,D3,D4,D5}}
-                                                              };
+
 
         std::map<std::string, std::vector<Object>> get_ = RemoveWeakPtr(get);
 

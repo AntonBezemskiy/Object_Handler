@@ -1,0 +1,61 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-a0855f92174eea148e78.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Object_Handler",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "Object_Processing::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Object_Processing-Debug-9707d96bb50013b9b436.json",
+					"name" : "Object_Processing",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/anton/My_education/Test_booklets/Kode/Object_Handler/build-Object_Handler-Desktop_Qt_6_4_1_GCC_64bit-Debug",
+		"source" : "/home/anton/My_education/Test_booklets/Kode/Object_Handler (\u043a\u043e\u043f\u0438\u044f)/Object_Handler"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 4
+	}
+}
